@@ -405,17 +405,15 @@
      2. DOSSIER DRAWER, SECTION JUMP, LIGHTBOX, QR MODAL & LANGUAGE SWITCHER
      ------------------------------------------------------------------------ */
   var dossier = document.getElementById('dossier');
-  var dossierPanel = document.getElementById('dossierPanel');
   var closeBtn = document.getElementById('dossierClose');
   var printCvBtn = document.getElementById('printCvBtn');
-  var mobileSimBtn = document.getElementById('mobileSimBtn');
   var openQrModalBtn = document.getElementById('openQrModalBtn');
   var qrModal = document.getElementById('qrModal');
   var qrModalClose = document.getElementById('qrModalClose');
   var qrModalImg = document.getElementById('qrModalImg');
   var qrModalUrlInput = document.getElementById('qrModalUrlInput');
   var qrCopyUrlBtn = document.getElementById('qrCopyUrlBtn');
-  var qrTrySimBtn = document.getElementById('qrTrySimBtn');
+  var qrOpenDirectBtn = document.getElementById('qrOpenDirectBtn');
   var langBtn = document.getElementById('langBtn');
   var wfLightbox = document.getElementById('wfLightbox');
   var wfLightboxClose = document.getElementById('wfLightboxClose');
@@ -572,20 +570,6 @@
     });
   }
 
-  function toggleMobileSim(forceState) {
-    if (!dossierPanel) return;
-    var active = typeof forceState === 'boolean' ? forceState : !dossierPanel.classList.contains('is-mobile-sim');
-    dossierPanel.classList.toggle('is-mobile-sim', active);
-    if (mobileSimBtn) {
-      mobileSimBtn.classList.toggle('is-active', active);
-    }
-  }
-
-  if (mobileSimBtn) {
-    mobileSimBtn.addEventListener('click', function () {
-      toggleMobileSim();
-    });
-  }
   if (openQrModalBtn) {
     openQrModalBtn.addEventListener('click', function () {
       toggleQrModal(true);
@@ -601,11 +585,10 @@
       if (e.target === qrModal) toggleQrModal(false);
     });
   }
-  if (qrTrySimBtn) {
-    qrTrySimBtn.addEventListener('click', function () {
-      toggleQrModal(false);
-      toggleDossier(true);
-      toggleMobileSim(true);
+  if (qrOpenDirectBtn) {
+    qrOpenDirectBtn.addEventListener('click', function () {
+      var urlToOpen = (qrModalUrlInput && qrModalUrlInput.value.trim()) ? qrModalUrlInput.value.trim() : getShareablePhoneUrl();
+      window.open(urlToOpen, '_blank', 'noopener');
     });
   }
 
